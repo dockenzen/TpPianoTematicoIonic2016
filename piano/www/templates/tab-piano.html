@@ -1,43 +1,62 @@
    <ion-view view-title="Animales">
     <ion-content id="fhm_page">
-      <div class="fhm_container">
-        <div class="fhm_row">
-          <div class="fhm_item">
-            <button ng-disabled="UsuarioSecuencia.isPlaying()" ng-click="TocarPiano('elefante')" class="push_button_animal">
+    <button ng-click="PlaySecuencia()" style="margin:5px" class="button button-small icon-left ion-play button-positive"> Reproducir </button>
+
+        <button ng-click="SaveSecuencia()" style="float:right;margin:5px" class="button button-small icon-right ion-ios-recording  button-positive">Guardar  <br></button>
+
+
+    <table>
+    <tr><td>
+          <div class="fotos">
+            <button ng-click="Reproducir('elefante')" class="push_button_animal">
               <img src="img/elefante.jpg">
            </button>
           </div>
-          <div class="fhm_item">
-            <button ng-disabled="UsuarioSecuencia.isPlaying()" ng-click="TocarPiano('gallo')" class="push_button_animal">
-              <img src="img/gallo.jpg">
-      </button>
+          </td>
+          <td>
+          <div class="fotos">
+            <button ng-click="Reproducir('gallo')" class="push_button_animal">
+              <img  src="img/gallo.jpg">
+            </button>
           </div>
-        </div>
-        <div class="fhm_row">
-          <div class="fhm_item">
-            <button ng-disabled="UsuarioSecuencia.isPlaying()" ng-click="TocarPiano('leon')" class="push_button_animal">
+          </td>        
+     </tr>
+
+     <tr>
+     <td>
+          <div class="fotos">
+            <button ng-click="Reproducir('leon')" class="push_button_animal">
               <img src="img/leon.jpg">
-      </button>
+            </button>
           </div>
-          <div class="fhm_item">
-            <button ng-disabled="UsuarioSecuencia.isPlaying()" ng-click="TocarPiano('vaca')"class="push_button_animal">
+     </td>
+     <td>
+          <div class="fotos">
+            <button ng-click="Reproducir('vaca')" class="push_button_animal">
               <img src="img/vaca.jpg">
-      </button>
+            </button>
           </div>
-        </div>
-        <div class="fhm_row">
-          <div class="fhm_item">
-            <button ng-disabled="UsuarioSecuencia.isPlaying()" ng-click="TocarPiano('perro')"class="push_button_animal">
+      </td>    
+      </tr>   
+      
+      <tr>     
+      <td>
+          <div class="fotos">
+            <button ng-click="Reproducir('perro')" class="push_button_animal">
               <img src="img/perro.jpg">
-      </button>
-          </div>
-          <div class="fhm_item">
-            <button ng-disabled="UsuarioSecuencia.isPlaying()" ng-click="TocarPiano('gato')"class="push_button_animal">
+            </button>
+        </div>
+      </td>
+      <td>        
+          <div class="fotos">
+            <button ng-click="Reproducir('gato')" class="push_button_animal">
               <img src="img/gato.jpg">
            </button>
           </div>
-        </div>
-  </div>
+          </td>
+        </tr>   
+
+  </table>
 
      </ion-content>
 </ion-view>
