@@ -52,9 +52,14 @@ $scope.loginData = {};
    };
 })
 
-.controller('pianoCtrl', function($scope,$state,$ionicPlatform,$cordovaNativeAudio,$cordovaVibration) {
+.controller('pianoCtrl', function($scope,$state,$stateParams,$ionicPlatform,$cordovaNativeAudio,$cordovaVibration,$cordovaFile) {
 
+
+var usuario = $stateParams.name;
+var archivo = usuario+"piano.txt";
 $scope.melodia = "";
+
+
 
 try
 {
@@ -112,7 +117,97 @@ catch(e)
 {
   alert(e);
 }
-      
+
+  $scope.SaveSecuencia = function(){
+
+    $scope.datos = {};
+    $scope.datos.melodia = $scope.melodia;
+    datosJSON = JSON.stringify($scope.datos);
+    //alert(eleccion);
+
+    $cordovaFile.checkDir(cordova.file.externalApplicationStorageDirectory,usuario)
+        .then(function (success) {
+          // success
+                  $cordovaFile.writeFile(cordova.file.externalApplicationStorageDirectory,usuario+"/"+ archivo, datosJSON,true)      
+                    .then(function (success) {
+                      console.log("Se encontró el directorio correctamente");
+                    }, function (error) {
+                      // error
+                      alert(error);
+                      console.log("Error al escribir archivo",error.message);
+                    });
+            }, function (error) {
+          // error
+          console.log("No se pudo encontrar la ruta",error.message);
+
+              $cordovaFile.createDir(cordova.file.externalApplicationStorageDirectory,usuario, false)
+               .then(function (success) {
+                 // success
+                  $cordovaFile.writeFile(cordova.file.externalApplicationStorageDirectory,usuario+"/"+archivo, datosJSON,true)
+                    .then(function (success) {
+                      console.log("Se escribio correctamente");
+                      }, function (error) {
+                            // error
+                            alert(error);
+                            console.log("Error al escribir archivo",error.message);
+                         }
+                    );
+                }, function (error) {
+                        // error
+                        alert(error);
+                        console.log("No se pudo crear la ruta",error.name);
+                   });            
+              });   
+  }
+
+
+  $scope.PlaySecuencia = function(){
+
+    try{
+    $cordovaFile.checkDir(cordova.file.externalApplicationStorageDirectory, usuario)
+      .then(function (success) {
+        // success
+            $cordovaFile.checkFile(cordova.file.externalApplicationStorageDirectory,usuario+"/"+archivo)
+              .then(function (success) {
+               // success
+                    // READ
+                    $cordovaFile.readAsText(cordova.file.externalApplicationStorageDirectory,usuario+"/"+archivo)
+                      .then(function (success) {
+                        // success
+                        //alert(success);
+                        var parseado = JSON.parse(success);
+                        alert(parseado);
+                        var splitArray = parseado.split("-");
+                        
+  /*                      for (var i = 0; i < splitArray.length; i++) {
+                            if(i<splitArray.length)
+                              {
+                                $scope.Reproducir(splitArray[i])
+                              }
+                            }
+                          }
+*/
+                      }, function (error) {
+                        // error
+                          console.log(error);
+
+                      });
+                  }, function (error) {
+                         // error
+                         console.log(error);
+            });
+      }, function (error) {      
+        // error
+        alert(error);
+      });
+    }
+    catch(e)
+    {
+      //alert(e);
+    }
+                  
+
+  }
 
   $scope.Reproducir = function(opcion){
     try 

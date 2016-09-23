@@ -51,7 +51,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
   })
 
   .state('tab.piano', {
-      url: '/piano',   
+      url: '/piano/:name',   
       views: {   
         'tab-piano': {
       templateUrl: 'templates/tab-piano.html',

@@ -12,3 +12,16 @@ img {
     height: auto;
     width: auto; 
 }
+
+.textoMenuPrin{
+  color: #FFF;
+  font-family: English;
+  font: bold;
+  text-align:center;
+  font-style: normal;
+  font-weight: bold;
+  text-shadow: 0 0 0.2em #00FFFF, 0 0 0.2em #87F, 0 0 0.2em #87F;
+  font-size:23px;
+  height:100%;
+  width:100%;  
+    }
