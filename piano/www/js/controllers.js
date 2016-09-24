@@ -60,7 +60,6 @@ var archivo = usuario+"piano.txt";
 $scope.melodia = "";
 
 
-
 try
 {
  $cordovaNativeAudio
@@ -122,30 +121,30 @@ catch(e)
 
     $scope.datos = {};
     $scope.datos.melodia = $scope.melodia;
-    datosJSON = JSON.stringify($scope.datos);
-    //alert(eleccion);
+    var datosJSON = JSON.stringify($scope.datos);
+    var parseado = JSON.parse(datosJSON);
 
     $cordovaFile.checkDir(cordova.file.externalApplicationStorageDirectory,usuario)
         .then(function (success) {
           // success
                   $cordovaFile.writeFile(cordova.file.externalApplicationStorageDirectory,usuario+"/"+ archivo, datosJSON,true)      
                     .then(function (success) {
-                      console.log("Se encontró el directorio correctamente");
+                      alert("Se guardó la secuencia correctamente");
                     }, function (error) {
                       // error
                       alert(error);
-                      console.log("Error al escribir archivo",error.message);
+                      alert("Error al escribir archivo",error.message);
                     });
             }, function (error) {
           // error
-          console.log("No se pudo encontrar la ruta",error.message);
+          alert("No se pudo encontrar la ruta",error.message);
 
               $cordovaFile.createDir(cordova.file.externalApplicationStorageDirectory,usuario, false)
                .then(function (success) {
                  // success
                   $cordovaFile.writeFile(cordova.file.externalApplicationStorageDirectory,usuario+"/"+archivo, datosJSON,true)
                     .then(function (success) {
-                      console.log("Se escribio correctamente");
+                      alert("Se guardó la secuencia correctamente");
                       }, function (error) {
                             // error
                             alert(error);
@@ -159,7 +158,16 @@ catch(e)
                    });            
               });   
   }
-
+/*
+  $scope.resetear = function(){
+      $cordovaFile.removeFile(cordova.file.externalApplicationStorageDirectory, usuario+"/"+archivo)
+      .then(function (success) {
+          // success
+        }, function (error) {
+          // error
+        });
+    }
+*/
 
   $scope.PlaySecuencia = function(){
 
@@ -176,25 +184,30 @@ catch(e)
                         // success
                         //alert(success);
                         var parseado = JSON.parse(success);
-                        alert(parseado);
-                        var splitArray = parseado.split("-");
-                        
-  /*                      for (var i = 0; i < splitArray.length; i++) {
-                            if(i<splitArray.length)
-                              {
-                                $scope.Reproducir(splitArray[i])
-                              }
-                            }
-                          }
-*/
+                        alert(parseado.melodia);
+                        var splitArray = parseado.melodia.split("-");
+
+                        var i = 0;                         
+                        function myLoop (splitArray) {           
+                              setTimeout(function () {    
+                                    $scope.Reproducir(splitArray[i]);
+                                    i++;                     
+                                    if (i < splitArray.length)
+                                    {            
+                                       myLoop(splitArray);             
+                                    }                        
+                            }, 3000)
+                        }
+                        myLoop(splitArray);                                               
                       }, function (error) {
                         // error
-                          console.log(error);
+                          alert(error);
 
                       });
                   }, function (error) {
                          // error
                          console.log(error);
+                         alert(error);
             });
       }, function (error) {      
         // error
@@ -203,7 +216,7 @@ catch(e)
     }
     catch(e)
     {
-      //alert(e);
+      alert(e);
     }
                   
 
